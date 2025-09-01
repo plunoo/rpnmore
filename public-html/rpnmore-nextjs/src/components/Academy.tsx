@@ -77,7 +77,7 @@ export default function Academy() {
     }
   };
 
-  const handleEnrollClick = (course: any) => {
+  const handleEnrollClick = (course: typeof courses[0]) => {
     trackAffiliateClick(course.id, course.provider);
     window.open(course.affiliateLink, '_blank');
   };

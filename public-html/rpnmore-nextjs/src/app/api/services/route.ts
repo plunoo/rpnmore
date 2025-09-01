@@ -32,7 +32,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const serviceInquiry = await request.json();
+  const _serviceInquiry = await request.json();
   
   return NextResponse.json({ 
     success: true, 

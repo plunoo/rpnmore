@@ -28,7 +28,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const post = await request.json();
+  const _post = await request.json();
   
   return NextResponse.json({ 
     success: true, 

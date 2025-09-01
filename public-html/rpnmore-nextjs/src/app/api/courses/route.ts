@@ -68,7 +68,7 @@ export async function GET() {
 }
 
 export async function POST(request: NextRequest) {
-  const course = await request.json();
+  const _course = await request.json();
   
   return NextResponse.json({ 
     success: true, 
