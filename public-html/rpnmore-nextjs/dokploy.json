@@ -1,0 +1,25 @@
+{
+  "name": "rpnmore-nextjs",
+  "dockerfile": "Dockerfile",
+  "buildContext": ".",
+  "ports": [
+    {
+      "external": 80,
+      "internal": 3000
+    },
+    {
+      "external": 443,
+      "internal": 3000
+    }
+  ],
+  "environment": {
+    "NODE_ENV": "production",
+    "NEXT_TELEMETRY_DISABLED": "1"
+  },
+  "healthCheck": {
+    "path": "/",
+    "interval": 30,
+    "timeout": 10,
+    "retries": 3
+  }
+}
