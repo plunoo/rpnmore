@@ -2,23 +2,18 @@
 @import "tailwindcss";
 
 :root {
-  --primary: hsl(207.9 87.8% 30.4%);
-  --accent: hsl(42.4 95.7% 54.3%);
-  --background: hsl(240 10% 3.9%);
-  --foreground: hsl(0 0% 98%);
-  --dark: hsl(240 10% 3.9%);
-  --dark-card: hsl(240 10% 10%);
-  --dark-border: hsl(240 3.7% 15.9%);
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #fcfbf8;
-    --foreground: #1c1c1c;
-    --dark: #f8f9fa;
-    --dark-card: #ffffff;
-    --dark-border: #e5e7eb;
-  }
+  --primary: #095292;
+  --primary-hover: #0a5fa3;
+  --accent: #fab91b;
+  --accent-hover: #e5a515;
+  --accent-foreground: #1a1a1a;
+  --background: #0a0a0a;
+  --foreground: rgba(255, 255, 255, 0.87);
+  --card: #121212;
+  --card-hover: #1e1e1e;
+  --border: rgba(232, 234, 237, 0.12);
+  --muted: rgba(255, 255, 255, 0.6);
+  --muted-foreground: rgba(255, 255, 255, 0.38);
 }
 
 html {
@@ -28,20 +23,45 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 .hero-gradient {
-  background: linear-gradient(135deg, #095292, #09090b);
+  background: linear-gradient(135deg, var(--primary), #0a0a0a);
 }
 
 .card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
 }
 
 .card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(250, 185, 27, 0.1);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(250, 185, 27, 0.1);
+  background: var(--card-hover);
+}
+
+.glass-effect {
+  backdrop-filter: blur(16px);
+  background: rgba(18, 18, 18, 0.8);
+  border: 1px solid var(--border);
+}
+
+.button-primary {
+  background: var(--accent);
+  color: var(--accent-foreground);
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button-primary:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(250, 185, 27, 0.3);
 }

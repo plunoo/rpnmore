@@ -70,17 +70,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-white font-medium">Email</p>
-                    <p className="text-gray-400">info@rpnmore.com</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                    <span className="text-white">📞</span>
-                  </div>
-                  <div>
-                    <p className="text-white font-medium">Phone</p>
-                    <p className="text-gray-400">+971 50 847 2503</p>
+                    <p className="text-gray-400">ask@rpnmore.com</p>
                   </div>
                 </div>
 

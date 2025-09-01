@@ -59,10 +59,7 @@ export default function PrivacyPolicy() {
               </p>
               <div className="bg-dark-card border border-dark-border rounded-lg p-6">
                 <p className="text-white mb-2">
-                  <strong>Email:</strong> info@rpnmore.com
-                </p>
-                <p className="text-white mb-2">
-                  <strong>Phone:</strong> +971 50 847 2503
+                  <strong>Email:</strong> ask@rpnmore.com
                 </p>
                 <p className="text-white">
                   <strong>WhatsApp:</strong> <a 

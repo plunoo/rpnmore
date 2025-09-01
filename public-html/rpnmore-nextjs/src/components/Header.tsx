@@ -25,7 +25,7 @@ export default function Header() {
   };
 
   return (
-    <header className={`fixed top-0 w-full backdrop-blur-md border-b border-dark-border z-50 transition-colors duration-300 ${isScrolled ? 'bg-dark' : 'bg-dark/95'}`}>
+    <header className={`fixed top-0 w-full glass-effect z-50 transition-all duration-300 ${isScrolled ? 'shadow-2xl' : ''}`}>
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
