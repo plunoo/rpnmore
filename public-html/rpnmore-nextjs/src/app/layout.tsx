@@ -31,8 +31,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} antialiased`}>
+    <html lang="en" className="dark">
+      <head>
+        <meta name="theme-color" content="#095292" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+      </head>
+      <body className={`${inter.variable} antialiased min-h-screen flex flex-col`}>
         {children}
       </body>
     </html>

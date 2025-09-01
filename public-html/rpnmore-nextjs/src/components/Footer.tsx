@@ -14,15 +14,30 @@ export default function Footer() {
               Your trusted partner for comprehensive business solutions, crypto advisory, AI innovation, and professional development.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300">
+              <a 
+                href="https://www.linkedin.com/in/kwaku-dame-1b1321181/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-accent transition-colors duration-300"
+              >
                 <span className="sr-only">LinkedIn</span>
                 🔗
               </a>
-              <a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300">
+              <a 
+                href="https://x.com/kwakuDame1?t=ihs3PeBq7LgqZSFIpGRcTw&s=09" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-accent transition-colors duration-300"
+              >
                 <span className="sr-only">Twitter</span>
                 🐦
               </a>
-              <a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300">
+              <a 
+                href="https://www.facebook.com/kwaku.dame/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-accent transition-colors duration-300"
+              >
                 <span className="sr-only">Facebook</span>
                 📘
               </a>
@@ -85,7 +100,7 @@ export default function Footer() {
         <div className="border-t border-dark-border mt-8 pt-8 text-center">
           <p className="text-gray-400">
             © 2024 RPNMore. All rights reserved. |
-            <a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300 ml-2">
+            <a href="/privacy" className="text-gray-400 hover:text-accent transition-colors duration-300 ml-2">
               Privacy Policy
             </a> |
             <a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300 ml-2">

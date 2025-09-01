@@ -11,6 +11,16 @@
   --dark-border: hsl(240 3.7% 15.9%);
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #fcfbf8;
+    --foreground: #1c1c1c;
+    --dark: #f8f9fa;
+    --dark-card: #ffffff;
+    --dark-border: #e5e7eb;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }

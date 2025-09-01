@@ -80,7 +80,24 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-white font-medium">Phone</p>
-                    <p className="text-gray-400">+1 (555) 123-4567</p>
+                    <p className="text-gray-400">+971 50 847 2503</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                    <span className="text-white">💬</span>
+                  </div>
+                  <div>
+                    <p className="text-white font-medium">WhatsApp</p>
+                    <a 
+                      href="https://wa.me/971508472503" 
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-green-400 transition-colors duration-300"
+                    >
+                      +971 50 847 2503
+                    </a>
                   </div>
                 </div>
               </div>
