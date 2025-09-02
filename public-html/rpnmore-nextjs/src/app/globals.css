@@ -1,7 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
+  --primary: #095292;
+  --primary-hover: #0a5fa3;
+  --accent: #fab91b;
+  --accent-hover: #e5a515;
+  --accent-foreground: #1a1a1a;
+  --background: #0a0a0a;
+  --foreground: rgba(255, 255, 255, 0.87);
+  --card: #121212;
+  --card-hover: #1e1e1e;
+  --border: rgba(232, 234, 237, 0.12);
+  --muted: rgba(255, 255, 255, 0.6);
+  --muted-foreground: rgba(255, 255, 255, 0.38);
+}
+
+.light {
+  --primary: #095292;
+  --primary-hover: #0a5fa3;
+  --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --accent-foreground: #ffffff;
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --card: #f8fafc;
+  --card-hover: #f1f5f9;
+  --border: rgba(0, 0, 0, 0.12);
+  --muted: rgba(0, 0, 0, 0.6);
+  --muted-foreground: rgba(0, 0, 0, 0.38);
+}
+
+.dark {
   --primary: #095292;
   --primary-hover: #0a5fa3;
   --accent: #fab91b;
@@ -23,10 +52,12 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-inter), var(--font-open-sans), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   line-height: 1.6;
+  font-display: swap;
 }
 
 .hero-gradient {
@@ -64,4 +95,107 @@ body {
   background: var(--accent-hover);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(250, 185, 27, 0.3);
+}
+
+.testimonial-card {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-12px) rotateX(5deg);
+  box-shadow: 
+    0 32px 64px rgba(0, 0, 0, 0.4),
+    0 8px 16px rgba(250, 185, 27, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.modern-button {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--accent), #fbbf24);
+  border-radius: 12px;
+  padding: 12px 32px;
+  font-weight: 600;
+  color: var(--accent-foreground);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 14px rgba(250, 185, 27, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.modern-button:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 
+    0 8px 25px rgba(250, 185, 27, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.modern-button:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 
+    0 2px 8px rgba(250, 185, 27, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.glass-card {
+  backdrop-filter: blur(20px);
+  background: rgba(18, 18, 18, 0.8);
+  border: 1px solid rgba(250, 185, 27, 0.1);
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(18, 18, 18, 0.9);
+  border-color: rgba(250, 185, 27, 0.3);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(250, 185, 27, 0.1);
+}
+
+.cute-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.sparkle {
+  position: relative;
+  overflow: hidden;
+}
+
+.sparkle::before {
+  content: '✨';
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  font-size: 20px;
+  opacity: 0;
+  animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { box-shadow: 0 0 20px rgba(250, 185, 27, 0.3); }
+  to { box-shadow: 0 0 30px rgba(250, 185, 27, 0.6), 0 0 40px rgba(250, 185, 27, 0.3); }
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
