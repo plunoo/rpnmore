@@ -60,7 +60,7 @@ export default function Testimonials() {
             <span className="text-4xl">✨</span>
           </div>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            💝 See how we've helped businesses transform and grow with our comprehensive solutions! 
+            💝 See how we&apos;ve helped businesses transform and grow with our comprehensive solutions! 
             <span className="text-accent font-semibold">Join the success story! 🎉</span>
           </p>
         </div>
