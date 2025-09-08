@@ -83,24 +83,24 @@ export default function Academy() {
   };
 
   return (
-    <section id="academy" className="py-20 bg-dark-card">
+    <section id="academy" className="compact-section bg-muted/30">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
             RPNMore Academy
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-base text-muted-foreground max-w-2xl mx-auto">
             Professional development programs designed to enhance your skills and advance your career.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
           {courses.map((course, index) => (
-            <div key={index} className="card-hover p-6 rounded-lg bg-dark border border-dark-border group cursor-pointer transform hover:scale-105 transition-all duration-300"
+            <div key={index} className="card-hover p-6 rounded-lg bg-card border border-border group cursor-pointer transform hover:scale-105 transition-all duration-300"
                  onClick={() => handleEnrollClick(course)}>
               <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center gap-3">
-                  <h3 className="text-xl font-semibold text-white group-hover:text-accent transition-colors">
+                  <h3 className="text-xl font-semibold text-foreground group-hover:text-accent transition-colors">
                     {course.title}
                   </h3>
                   {course.discount && (
@@ -114,23 +114,23 @@ export default function Academy() {
                 </span>
               </div>
               
-              <p className="text-gray-400 mb-4">{course.description}</p>
+              <p className="text-muted-foreground mb-4">{course.description}</p>
               
               <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
                   <span>⏱️ {course.duration}</span>
                   <span>⭐ {course.rating}</span>
                   <span>👥 {course.students}</span>
                 </div>
-                <span className="text-xs text-gray-500 bg-gray-800 px-2 py-1 rounded">{course.provider}</span>
+                <span className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">{course.provider}</span>
               </div>
               
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="text-2xl font-bold text-accent">{course.price}</span>
-                  <span className="text-sm text-gray-500 line-through">{course.originalPrice}</span>
+                  <span className="text-sm text-muted-foreground line-through">{course.originalPrice}</span>
                 </div>
-                <button className="bg-accent text-accent-foreground px-6 py-2 rounded-lg font-semibold hover:bg-yellow-500 transition-all duration-300 group-hover:shadow-lg">
+                <button className="bg-accent text-accent-foreground px-6 py-2 rounded-lg font-semibold hover:bg-primary/90 transition-all duration-300 group-hover:shadow-lg">
                   Enroll Now →
                 </button>
               </div>
@@ -139,7 +139,7 @@ export default function Academy() {
         </div>
 
         <div className="text-center mt-12">
-          <p className="text-gray-400 text-sm mb-4">
+          <p className="text-muted-foreground text-sm mb-4">
             🎯 Earn while you learn! Get exclusive discounts on top-rated courses.
           </p>
         </div>

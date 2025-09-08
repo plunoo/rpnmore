@@ -1,63 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --primary: #095292;
-  --primary-hover: #0a5fa3;
-  --accent: #fab91b;
-  --accent-hover: #e5a515;
-  --accent-foreground: #1a1a1a;
-  --background: #0a0a0a;
-  --foreground: rgba(255, 255, 255, 0.87);
-  --card: #121212;
-  --card-hover: #1e1e1e;
-  --border: rgba(232, 234, 237, 0.12);
-  --muted: rgba(255, 255, 255, 0.6);
-  --muted-foreground: rgba(255, 255, 255, 0.38);
-}
-
-.light {
-  --primary: #095292;
-  --primary-hover: #0a5fa3;
-  --accent: #f59e0b;
-  --accent-hover: #d97706;
-  --accent-foreground: #ffffff;
-  --background: #ffffff;
-  --foreground: #1a1a1a;
-  --card: #f8fafc;
-  --card-hover: #f1f5f9;
-  --border: rgba(0, 0, 0, 0.12);
-  --muted: rgba(0, 0, 0, 0.6);
-  --muted-foreground: rgba(0, 0, 0, 0.38);
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 0 0% 20%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 0 0% 20%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 0 0% 20%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
+  --floating-text: 0 0% 4%;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: Menlo, monospace;
+  --radius: 0.5rem;
 }
 
 .dark {
-  --primary: #095292;
-  --primary-hover: #0a5fa3;
-  --accent: #fab91b;
-  --accent-hover: #e5a515;
-  --accent-foreground: #1a1a1a;
-  --background: #0a0a0a;
-  --foreground: rgba(255, 255, 255, 0.87);
-  --card: #121212;
-  --card-hover: #1e1e1e;
-  --border: rgba(232, 234, 237, 0.12);
-  --muted: rgba(255, 255, 255, 0.6);
-  --muted-foreground: rgba(255, 255, 255, 0.38);
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 217.2 91.2% 59.8%;
+  --primary-foreground: 222.2 84% 4.9%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 224.3 76.3% 94.1%;
+  --floating-text: 210 40% 98%;
 }
 
-html {
-  scroll-behavior: smooth;
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter), var(--font-open-sans), system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  line-height: 1.6;
-  font-display: swap;
+@layer utilities {
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)) 60%, hsl(var(--destructive)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Light theme text shadows for bold text */
+  h1, h2, h3, h4, h5, h6, .font-bold, .font-semibold {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6, 
+  .dark .font-bold, .dark .font-semibold {
+    text-shadow: none;
+  }
 }
 
 .hero-gradient {
@@ -70,11 +98,10 @@ body {
 }
 
 .card-hover:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-4px) scale(1.01);
   box-shadow: 
-    0 25px 50px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(250, 185, 27, 0.1);
-  background: var(--card-hover);
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(59, 130, 246, 0.1);
 }
 
 .glass-effect {
@@ -198,4 +225,28 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.compact-section {
+  padding: 3rem 0;
+}
+
+.compact-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.compact-section p {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .compact-section {
+    padding: 4rem 0;
+  }
+  
+  .compact-section h2 {
+    font-size: 2.5rem;
+  }
 }

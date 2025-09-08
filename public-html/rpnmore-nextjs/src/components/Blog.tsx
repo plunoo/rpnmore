@@ -24,32 +24,32 @@ export default function Blog() {
   ];
 
   return (
-    <section id="blog" className="py-20 bg-dark">
+    <section id="blog" className="py-20 bg-muted/30">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Latest Insights
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Stay informed with our latest articles, insights, and industry analysis.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((article, index) => (
-            <article key={index} className="card-hover bg-dark-card border border-dark-border rounded-lg overflow-hidden">
+            <article key={index} className="card-hover bg-card border border-border rounded-lg overflow-hidden">
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <span className="bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
                     {article.category}
                   </span>
-                  <span className="text-gray-500 text-sm">{article.readTime}</span>
+                  <span className="text-muted-foreground text-sm">{article.readTime}</span>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">{article.title}</h3>
-                <p className="text-gray-400 mb-4">{article.excerpt}</p>
+                <h3 className="text-xl font-semibold text-foreground mb-3">{article.title}</h3>
+                <p className="text-muted-foreground mb-4">{article.excerpt}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-500 text-sm">{article.date}</span>
-                  <button className="text-accent hover:text-yellow-400 transition-colors duration-300 font-medium">
+                  <span className="text-muted-foreground text-sm">{article.date}</span>
+                  <button className="text-primary hover:text-primary/80 transition-colors duration-300 font-medium">
                     Read More →
                   </button>
                 </div>
@@ -59,7 +59,7 @@ export default function Blog() {
         </div>
 
         <div className="text-center mt-12">
-          <button className="bg-accent text-accent-foreground px-8 py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors duration-300">
+          <button className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-300">
             View All Articles
           </button>
         </div>

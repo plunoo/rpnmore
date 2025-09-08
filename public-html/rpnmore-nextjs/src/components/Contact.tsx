@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { WhatsAppIcon } from './WhatsAppIcon';
 
 interface ContactForm {
   name: string;
@@ -33,13 +34,13 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-dark">
+    <section id="contact" className="py-20 bg-muted/30">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Get In Touch
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Ready to transform your business? Let&apos;s discuss how we can help you achieve your goals.
           </p>
         </div>
@@ -47,17 +48,17 @@ export default function Contact() {
         <div className="max-w-4xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-6">
+              <h3 className="text-2xl font-bold text-foreground mb-6">
                 Contact Information
               </h3>
               <div className="space-y-4">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                    <span className="text-white">📍</span>
+                    <span className="text-foreground">📍</span>
                   </div>
                   <div>
-                    <p className="text-white font-medium">Address</p>
-                    <p className="text-gray-400">
+                    <p className="text-foreground font-medium">Address</p>
+                    <p className="text-muted-foreground">
                       123 Business Street, Suite 100<br />
                       City, State 12345
                     </p>
@@ -66,25 +67,25 @@ export default function Contact() {
 
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                    <span className="text-white">📧</span>
+                    <span className="text-foreground">📧</span>
                   </div>
                   <div>
-                    <p className="text-white font-medium">Email</p>
-                    <p className="text-gray-400">ask@rpnmore.com</p>
+                    <p className="text-foreground font-medium">Email</p>
+                    <p className="text-muted-foreground">ask@rpnmore.com</p>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                    <span className="text-white">💬</span>
+                  <div className="w-10 h-10 bg-[#25D366] rounded-full flex items-center justify-center">
+                    <WhatsAppIcon className="w-5 h-5 text-foreground" />
                   </div>
                   <div>
-                    <p className="text-white font-medium">WhatsApp</p>
+                    <p className="text-foreground font-medium">WhatsApp</p>
                     <a 
                       href="https://wa.me/971508472503" 
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-green-400 transition-colors duration-300"
+                      className="text-muted-foreground hover:text-green-400 transition-colors duration-300"
                     >
                       +971 50 847 2503
                     </a>
@@ -106,7 +107,7 @@ export default function Contact() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label htmlFor="name" className="block text-white font-medium mb-2">
+                    <label htmlFor="name" className="block text-foreground font-medium mb-2">
                       Name *
                     </label>
                     <input
@@ -116,13 +117,13 @@ export default function Contact() {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg bg-dark-card border border-dark-border text-white placeholder-gray-400 focus:outline-none focus:border-accent"
+                      className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="Your full name"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-white font-medium mb-2">
+                    <label htmlFor="email" className="block text-foreground font-medium mb-2">
                       Email *
                     </label>
                     <input
@@ -132,13 +133,13 @@ export default function Contact() {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 rounded-lg bg-dark-card border border-dark-border text-white placeholder-gray-400 focus:outline-none focus:border-accent"
+                      className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="your.email@example.com"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="service" className="block text-white font-medium mb-2">
+                    <label htmlFor="service" className="block text-foreground font-medium mb-2">
                       Service Interest
                     </label>
                     <select
@@ -146,7 +147,7 @@ export default function Contact() {
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg bg-dark-card border border-dark-border text-white focus:outline-none focus:border-accent"
+                      className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground focus:outline-none focus:border-primary"
                     >
                       <option value="">Select a service</option>
                       <option value="business-consulting">Business Consulting</option>
@@ -158,7 +159,7 @@ export default function Contact() {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-white font-medium mb-2">
+                    <label htmlFor="message" className="block text-foreground font-medium mb-2">
                       Message *
                     </label>
                     <textarea
@@ -168,14 +169,14 @@ export default function Contact() {
                       onChange={handleChange}
                       required
                       rows={4}
-                      className="w-full px-4 py-3 rounded-lg bg-dark-card border border-dark-border text-white placeholder-gray-400 focus:outline-none focus:border-accent"
+                      className="w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary"
                       placeholder="Tell us about your project or inquiry..."
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-accent text-accent-foreground py-3 rounded-lg font-semibold hover:bg-yellow-500 transition-colors duration-300"
+                    className="w-full bg-accent text-accent-foreground py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-300"
                   >
                     Send Message
                   </button>

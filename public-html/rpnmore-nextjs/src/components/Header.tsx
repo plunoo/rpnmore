@@ -1,138 +1,166 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Building2, Moon, Sun } from 'lucide-react';
 
-export default function Header() {
+interface HeaderProps {
+  onSectionChange: (section: string) => void;
+  currentSection: string;
+}
+
+export default function Header({ onSectionChange, currentSection }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Check for saved theme or system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const initialTheme = savedTheme || systemTheme;
+    
+    setTheme(initialTheme);
+    document.documentElement.className = initialTheme;
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setIsMenuOpen(false);
-    }
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.className = newTheme;
   };
 
+  const handleSectionClick = (sectionId: string) => {
+    onSectionChange(sectionId);
+    setIsMenuOpen(false);
+  };
+
+  const navigation = [
+    { name: "About", href: "about" },
+    { name: "Services", href: "services" },
+    { name: "Academy", href: "academy" },
+    { name: "Crypto Advisory", href: "crypto" },
+    { name: "AI Solutions", href: "ai" },
+    { name: "Blog", href: "blog" },
+  ];
+
   return (
-    <header className={`fixed top-0 w-full glass-effect z-50 transition-all duration-300 ${isScrolled ? 'shadow-2xl' : ''}`}>
-      <nav className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-              <span className="text-primary font-bold text-xl">R</span>
+    <>
+      <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border transition-all duration-300">
+        <div className="container mx-auto px-4 lg:px-6">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <button 
+              onClick={() => handleSectionClick('home')}
+              className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
+            >
+              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                <Building2 className="h-6 w-6 text-primary-foreground" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-foreground">Ripple & More</h1>
+                <p className="text-xs text-muted-foreground">Business Solutions</p>
+              </div>
+            </button>
+
+            {/* Actions */}
+            <div className="flex items-center space-x-3">
+              <button
+                className="p-2 rounded-lg hover:bg-accent/50 transition-colors duration-300"
+                onClick={toggleTheme}
+              >
+                {theme === 'light' ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )}
+                <span className="sr-only">Toggle theme</span>
+              </button>
+              
+              <button
+                onClick={() => handleSectionClick('contact')}
+                className="hidden sm:inline-flex bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors duration-300"
+              >
+                Get Started
+              </button>
+              
+              <button
+                className="p-2 rounded-lg hover:bg-accent/50 transition-colors duration-300"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <Menu className="w-5 h-5" />
+                <span className="sr-only">Open menu</span>
+              </button>
             </div>
-            <span className="text-2xl font-bold text-white">RPNMore</span>
-          </div>
-
-          <div className="hidden md:flex items-center space-x-8">
-            <button
-              onClick={() => scrollToSection('about')}
-              className="text-white hover:text-accent transition-colors duration-300"
-            >
-              About
-            </button>
-            <button
-              onClick={() => scrollToSection('services')}
-              className="text-white hover:text-accent transition-colors duration-300"
-            >
-              Services
-            </button>
-            <button
-              onClick={() => scrollToSection('academy')}
-              className="text-white hover:text-accent transition-colors duration-300"
-            >
-              Academy
-            </button>
-            <button
-              onClick={() => scrollToSection('crypto')}
-              className="text-white hover:text-accent transition-colors duration-300"
-            >
-              Crypto Advisory
-            </button>
-            <button
-              onClick={() => scrollToSection('ai')}
-              className="text-white hover:text-accent transition-colors duration-300"
-            >
-              AI Solutions
-            </button>
-            <button
-              onClick={() => scrollToSection('blog')}
-              className="text-white hover:text-accent transition-colors duration-300"
-            >
-              Blog
-            </button>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="bg-accent text-accent-foreground px-6 py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors duration-300"
-            >
-              Contact
-            </button>
-            <button
-              className="md:hidden text-white hover:text-accent transition-colors duration-300"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </div>
+      </nav>
 
-        {isMenuOpen && (
-          <div className="mt-4 pb-4 border-t border-dark-border md:hidden">
-            <div className="flex flex-col space-y-4 pt-4">
-              <button
-                onClick={() => scrollToSection('about')}
-                className="text-gray-300 hover:text-accent transition-colors duration-300 text-left"
-              >
-                About
-              </button>
-              <button
-                onClick={() => scrollToSection('services')}
-                className="text-gray-300 hover:text-accent transition-colors duration-300 text-left"
-              >
-                Services
-              </button>
-              <button
-                onClick={() => scrollToSection('academy')}
-                className="text-gray-300 hover:text-accent transition-colors duration-300 text-left"
-              >
-                Academy
-              </button>
-              <button
-                onClick={() => scrollToSection('crypto')}
-                className="text-gray-300 hover:text-accent transition-colors duration-300 text-left"
-              >
-                Crypto Advisory
-              </button>
-              <button
-                onClick={() => scrollToSection('ai')}
-                className="text-gray-300 hover:text-accent transition-colors duration-300 text-left"
-              >
-                AI Solutions
-              </button>
-              <button
-                onClick={() => scrollToSection('blog')}
-                className="text-gray-300 hover:text-accent transition-colors duration-300 text-left"
-              >
-                Blog
-              </button>
+      {/* Side Menu Overlay */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm" 
+            onClick={() => setIsMenuOpen(false)}
+          />
+          
+          {/* Menu Panel */}
+          <div className="absolute right-0 top-0 h-full w-80 max-w-[90vw] bg-card border-l border-border shadow-2xl">
+            <div className="flex flex-col h-full">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b border-border">
+                <h2 className="text-lg font-semibold">Navigation</h2>
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 rounded-lg hover:bg-accent/50 transition-colors duration-300"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              
+              {/* Navigation Items */}
+              <div className="flex-1 overflow-y-auto">
+                <div className="p-4 space-y-2">
+                  <button
+                    onClick={() => handleSectionClick('home')}
+                    className={`w-full text-left px-4 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                      currentSection === 'home' 
+                        ? 'bg-primary text-primary-foreground' 
+                        : 'hover:bg-accent hover:text-accent-foreground'
+                    }`}
+                  >
+                    Home
+                  </button>
+                  
+                  {navigation.map((item) => (
+                    <button
+                      key={item.name}
+                      onClick={() => handleSectionClick(item.href)}
+                      className={`w-full text-left px-4 py-3 rounded-lg font-medium transition-colors duration-200 ${
+                        currentSection === item.href 
+                          ? 'bg-primary text-primary-foreground' 
+                          : 'hover:bg-accent hover:text-accent-foreground'
+                      }`}
+                    >
+                      {item.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Footer */}
+              <div className="p-4 border-t border-border">
+                <button
+                  onClick={() => handleSectionClick('contact')}
+                  className="w-full bg-primary text-primary-foreground px-4 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors duration-300"
+                >
+                  Get Started
+                </button>
+              </div>
             </div>
           </div>
-        )}
-      </nav>
-    </header>
+        </div>
+      )}
+    </>
   );
 }

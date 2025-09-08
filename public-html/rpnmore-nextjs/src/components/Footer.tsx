@@ -1,16 +1,16 @@
 export default function Footer() {
   return (
-    <footer className="bg-dark-card border-t border-dark-border">
-      <div className="container mx-auto px-6 py-12">
+    <footer className="bg-card border-t border-border">
+      <div className="container mx-auto px-6 py-6">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
               <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
                 <span className="text-primary font-bold text-xl">R</span>
               </div>
-              <span className="text-2xl font-bold text-white">RPNMore</span>
+              <span className="text-2xl font-bold text-foreground">Ripple & More</span>
             </div>
-            <p className="text-gray-400 mb-4 max-w-md">
+            <p className="text-muted-foreground mb-4 max-w-md">
               Your trusted partner for comprehensive business solutions, crypto advisory, AI innovation, and professional development.
             </p>
             <div className="flex space-x-4">
@@ -18,7 +18,7 @@ export default function Footer() {
                 href="https://www.linkedin.com/in/kwaku-dame-1b1321181/" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-accent transition-colors duration-300 p-2 rounded-lg hover:bg-gray-800"
+                className="text-muted-foreground hover:text-accent transition-colors duration-300 p-2 rounded-lg hover:bg-muted"
               >
                 <span className="sr-only">LinkedIn</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -29,7 +29,7 @@ export default function Footer() {
                 href="https://x.com/kwakuDame1?t=ihs3PeBq7LgqZSFIpGRcTw&s=09" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-accent transition-colors duration-300 p-2 rounded-lg hover:bg-gray-800"
+                className="text-muted-foreground hover:text-accent transition-colors duration-300 p-2 rounded-lg hover:bg-muted"
               >
                 <span className="sr-only">X (Twitter)</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -40,7 +40,7 @@ export default function Footer() {
                 href="https://www.facebook.com/kwaku.dame/" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 hover:text-accent transition-colors duration-300 p-2 rounded-lg hover:bg-gray-800"
+                className="text-muted-foreground hover:text-accent transition-colors duration-300 p-2 rounded-lg hover:bg-muted"
               >
                 <span className="sr-only">Facebook</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -51,25 +51,25 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Services</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-4">Services</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#services" className="text-gray-400 hover:text-accent transition-colors duration-300">
+                <a href="#services" className="text-muted-foreground hover:text-accent transition-colors duration-300">
                   Business Consulting
                 </a>
               </li>
               <li>
-                <a href="#crypto" className="text-gray-400 hover:text-accent transition-colors duration-300">
+                <a href="#crypto" className="text-muted-foreground hover:text-accent transition-colors duration-300">
                   Crypto Advisory
                 </a>
               </li>
               <li>
-                <a href="#ai" className="text-gray-400 hover:text-accent transition-colors duration-300">
+                <a href="#ai" className="text-muted-foreground hover:text-accent transition-colors duration-300">
                   AI Solutions
                 </a>
               </li>
               <li>
-                <a href="#academy" className="text-gray-400 hover:text-accent transition-colors duration-300">
+                <a href="#academy" className="text-muted-foreground hover:text-accent transition-colors duration-300">
                   Academy
                 </a>
               </li>
@@ -77,25 +77,25 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">Company</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-4">Company</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#about" className="text-gray-400 hover:text-accent transition-colors duration-300">
+                <a href="#about" className="text-muted-foreground hover:text-accent transition-colors duration-300">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#blog" className="text-gray-400 hover:text-accent transition-colors duration-300">
+                <a href="#blog" className="text-muted-foreground hover:text-accent transition-colors duration-300">
                   Blog
                 </a>
               </li>
               <li>
-                <a href="#contact" className="text-gray-400 hover:text-accent transition-colors duration-300">
+                <a href="#contact" className="text-muted-foreground hover:text-accent transition-colors duration-300">
                   Contact
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300">
+                <a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-300">
                   Careers
                 </a>
               </li>
@@ -103,13 +103,13 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-dark-border mt-8 pt-8 text-center">
-          <p className="text-gray-400">
-            © 2024 RPNMore. All rights reserved. |
-            <a href="/privacy" className="text-gray-400 hover:text-accent transition-colors duration-300 ml-2">
+        <div className="border-t border-border mt-4 pt-4 text-center">
+          <p className="text-muted-foreground">
+            © 2024 Ripple & More. All rights reserved. |
+            <a href="/privacy" className="text-muted-foreground hover:text-accent transition-colors duration-300 ml-2">
               Privacy Policy
             </a> |
-            <a href="#" className="text-gray-400 hover:text-accent transition-colors duration-300 ml-2">
+            <a href="#" className="text-muted-foreground hover:text-accent transition-colors duration-300 ml-2">
               Terms of Service
             </a>
           </p>

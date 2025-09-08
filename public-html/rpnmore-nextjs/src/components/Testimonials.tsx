@@ -49,56 +49,55 @@ export default function Testimonials() {
   ];
 
   return (
-    <section className="py-20 bg-dark">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 mb-6">
-            <span className="text-4xl">🌟</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white">
+    <section className="py-12 bg-dark">
+      <div className="container mx-auto px-6 max-w-5xl">
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 mb-4">
+            <span className="text-2xl">🌟</span>
+            <h2 className="text-2xl md:text-3xl font-bold text-white">
               Happy Clients Say
             </h2>
-            <span className="text-4xl">✨</span>
+            <span className="text-2xl">✨</span>
           </div>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            💝 See how we&apos;ve helped businesses transform and grow with our comprehensive solutions! 
+          <p className="text-base text-gray-400 max-w-2xl mx-auto">
+            💝 See how we&apos;ve helped businesses transform and grow! 
             <span className="text-accent font-semibold">Join the success story! 🎉</span>
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6">
           {testimonials.map((testimonial) => (
             <div 
               key={testimonial.id} 
-              className={`group relative testimonial-card p-8 rounded-3xl bg-gradient-to-br ${testimonial.gradient} backdrop-blur-xl border border-white/10 hover:border-accent/50 transition-all duration-700 cursor-pointer transform hover:scale-105`}
+              className={`group relative testimonial-card p-5 rounded-2xl bg-gradient-to-br ${testimonial.gradient} backdrop-blur-xl border border-white/10 hover:border-accent/50 transition-all duration-500 cursor-pointer transform hover:scale-102`}
             >
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              <div className="absolute top-4 right-4 text-2xl opacity-20 group-hover:opacity-60 transition-opacity duration-500">💫</div>
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative z-10">
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent to-yellow-400 flex items-center justify-center text-2xl mr-4 shadow-lg group-hover:shadow-accent/25 transition-shadow duration-500">
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-yellow-400 flex items-center justify-center text-lg mr-3 shadow-lg">
                     {testimonial.avatar}
                   </div>
                   <div>
-                    <h4 className="text-white font-bold text-xl mb-1">{testimonial.name}</h4>
-                    <p className={`${testimonial.accent} text-sm font-semibold`}>{testimonial.role}</p>
+                    <h4 className="text-white font-bold text-base mb-1">{testimonial.name}</h4>
+                    <p className={`${testimonial.accent} text-xs font-semibold`}>{testimonial.role}</p>
                     <p className="text-gray-400 text-xs">{testimonial.company}</p>
                   </div>
                 </div>
 
-                <div className="flex mb-6 justify-center">
+                <div className="flex mb-4 justify-center">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="text-yellow-400 text-2xl animate-pulse" style={{animationDelay: `${i * 0.1}s`}}>⭐</span>
+                    <span key={i} className="text-yellow-400 text-base">⭐</span>
                   ))}
                 </div>
 
-                <blockquote className="text-gray-200 leading-relaxed text-lg font-medium text-center">
+                <blockquote className="text-gray-200 leading-relaxed text-sm font-medium text-center">
                   {testimonial.content}
                 </blockquote>
                 
-                <div className="text-center mt-6">
-                  <span className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-2 rounded-full text-sm font-semibold">
-                    💎 Verified Client
+                <div className="text-center mt-4">
+                  <span className="inline-flex items-center gap-1 bg-accent/10 text-accent px-3 py-1 rounded-full text-xs font-semibold">
+                    💎 Verified
                   </span>
                 </div>
               </div>
@@ -106,26 +105,19 @@ export default function Testimonials() {
           ))}
         </div>
 
-        <div className="text-center mt-16">
-          <div className="inline-flex items-center gap-4 bg-gradient-to-r from-accent/20 to-yellow-400/20 backdrop-blur-xl px-8 py-6 rounded-3xl border border-accent/30 shadow-2xl">
-            <div className="flex -space-x-3">
+        <div className="text-center mt-8">
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-accent/20 to-yellow-400/20 backdrop-blur-xl px-6 py-3 rounded-2xl border border-accent/30 shadow-lg">
+            <div className="flex -space-x-2">
               {testimonials.slice(0, 3).map((t, i) => (
-                <div key={i} className="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-yellow-400 flex items-center justify-center text-lg border-3 border-white/20 shadow-lg animate-bounce" style={{animationDelay: `${i * 0.2}s`}}>
+                <div key={i} className="w-8 h-8 rounded-full bg-gradient-to-br from-accent to-yellow-400 flex items-center justify-center text-sm shadow-md">
                   {t.avatar}
                 </div>
               ))}
             </div>
             <div className="text-left">
-              <p className="text-white font-bold text-lg">🎉 Join 200+ Happy Clients!</p>
-              <p className="text-accent text-sm font-semibold">⭐ Average rating: 4.9/5 ⭐</p>
+              <p className="text-white font-bold text-sm">🎉 Join 200+ Happy Clients!</p>
+              <p className="text-accent text-xs font-semibold">⭐ 4.9/5 rating</p>
             </div>
-          </div>
-          
-          <div className="mt-8">
-            <button className="modern-button group relative overflow-hidden">
-              <span className="relative z-10">💫 Start Your Success Story</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-            </button>
           </div>
         </div>
       </div>
