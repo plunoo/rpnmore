@@ -1,18 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
-import About from '@/components/About';
-import Services from '@/components/Services';
-import Academy from '@/components/Academy';
-import CryptoAdvisory from '@/components/CryptoAdvisory';
-import AISolutions from '@/components/AISolutions';
-import Blog from '@/components/Blog';
-import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 import FloatingBlog from '@/components/FloatingBlog';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
+
+// Lazy load non-critical components
+const About = lazy(() => import('@/components/About'));
+const Services = lazy(() => import('@/components/Services'));
+const Academy = lazy(() => import('@/components/Academy'));
+const CryptoAdvisory = lazy(() => import('@/components/CryptoAdvisory'));
+const AISolutions = lazy(() => import('@/components/AISolutions'));
+const Blog = lazy(() => import('@/components/Blog'));
+const Contact = lazy(() => import('@/components/Contact'));
+
+// Loading component for better UX
+const SectionLoading = () => (
+  <div className="min-h-[400px] flex items-center justify-center">
+    <div className="animate-pulse">
+      <div className="h-8 bg-muted rounded w-48 mb-4"></div>
+      <div className="h-4 bg-muted rounded w-96 mb-2"></div>
+      <div className="h-4 bg-muted rounded w-80"></div>
+    </div>
+  </div>
+);
 
 export default function Home() {
   const [currentSection, setCurrentSection] = useState('home');
@@ -24,19 +37,47 @@ export default function Home() {
   const renderCurrentSection = () => {
     switch (currentSection) {
       case 'about':
-        return <About />;
+        return (
+          <Suspense fallback={<SectionLoading />}>
+            <About />
+          </Suspense>
+        );
       case 'services':
-        return <Services />;
+        return (
+          <Suspense fallback={<SectionLoading />}>
+            <Services />
+          </Suspense>
+        );
       case 'academy':
-        return <Academy />;
+        return (
+          <Suspense fallback={<SectionLoading />}>
+            <Academy />
+          </Suspense>
+        );
       case 'crypto':
-        return <CryptoAdvisory />;
+        return (
+          <Suspense fallback={<SectionLoading />}>
+            <CryptoAdvisory />
+          </Suspense>
+        );
       case 'ai':
-        return <AISolutions />;
+        return (
+          <Suspense fallback={<SectionLoading />}>
+            <AISolutions />
+          </Suspense>
+        );
       case 'blog':
-        return <Blog />;
+        return (
+          <Suspense fallback={<SectionLoading />}>
+            <Blog />
+          </Suspense>
+        );
       case 'contact':
-        return <Contact />;
+        return (
+          <Suspense fallback={<SectionLoading />}>
+            <Contact />
+          </Suspense>
+        );
       default:
         return <Hero onSectionChange={handleSectionChange} />;
     }

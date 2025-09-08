@@ -12,7 +12,7 @@ export default function Hero({ onSectionChange }: HeroProps) {
   };
 
   return (
-    <section className="py-12 lg:py-20 bg-gradient-to-br from-primary/10 to-accent/5 min-h-screen flex items-center justify-center">
+    <section className="hero-section py-12 lg:py-20 bg-gradient-to-br from-primary/10 to-accent/5 min-h-screen flex items-center justify-center">
       <div className="container mx-auto px-4 lg:px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight text-center">
@@ -26,13 +26,13 @@ export default function Hero({ onSectionChange }: HeroProps) {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => handleSectionClick('services')}
-              className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary/90 transition-colors duration-300"
+              className="btn-primary px-8 py-4 rounded-lg font-semibold text-lg text-primary-foreground"
             >
               Explore Services
             </button>
             <button
               onClick={() => handleSectionClick('contact')}
-              className="border-2 border-primary text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary hover:text-primary-foreground transition-colors duration-300"
+              className="btn-secondary px-8 py-4 rounded-lg font-semibold text-lg"
             >
               Get Started
             </button>
