@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: services
+    // Document ID: serviceId
+    // Fields:
+    //   - id: string (required)
+    //   - title: string (required, 1-100 chars)
+    //   - description: string (required, 1-500 chars)
+    //   - category: string (required)
+    //   - icon: string (required)
+    //   - imageUrl: string (optional, URL)
+    //   - longDescription: string (optional)
+    //   - updates: string (optional)
+    //   - additionalInfo: string (optional)
+    //   - externalLink: string (optional, URL)
+    //
+    // Collection: posts
+    // Document ID: postId
+    // Fields:
+    //   - id: string (required)
+    //   - title: string (required, 1-200 chars)
+    //   - excerpt: string (required)
+    //   - content: string (required)
+    //   - imageUrl: string (optional, URL)
+    //   - date: string (required)
+    //   - author: string (required)
+    //   - tags: list (optional)
+    //
+    // ===============================================================
+
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (request.auth.token.email == "mmtkeepa@gmail.com" && request.auth.token.email_verified == true);
+    }
+
+    function isValidUrl(url) {
+      return url is string && (url.matches("^https://.*") || url.matches("^http://.*"));
+    }
+
+    function isValidService(data) {
+      return data.id is string &&
+             data.title is string && data.title.size() > 0 && data.title.size() <= 100 &&
+             data.description is string && data.description.size() > 0 && data.description.size() <= 500 &&
+             data.category is string &&
+             data.icon is string &&
+             (!('imageUrl' in data) || isValidUrl(data.imageUrl)) &&
+             (!('externalLink' in data) || isValidUrl(data.externalLink));
+    }
+
+    function isValidPost(data) {
+      return data.id is string &&
+             data.title is string && data.title.size() > 0 && data.title.size() <= 200 &&
+             data.content is string &&
+             data.date is string &&
+             data.author is string;
+    }
+
+    // Services Collection
+    match /services/{serviceId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin() && isValidService(request.resource.data);
+    }
+
+    // Posts Collection
+    match /posts/{postId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin() && isValidPost(request.resource.data);
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

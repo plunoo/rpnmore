@@ -1,0 +1,9 @@
+{
+  "name": "RPNMORE - Creative & AI Solutions",
+  "description": "A comprehensive platform for RPNMORE's creative services, branding, and AI-powered marketing solutions, featuring an AI-driven blog.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
