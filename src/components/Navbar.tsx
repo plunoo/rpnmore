@@ -58,7 +58,8 @@ export default function Navbar({ isDark, onToggleTheme }: NavbarProps) {
             {isDark ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-          <motion.button
+          <motion.a
+            href="#contact"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             className={cn(
@@ -67,7 +68,7 @@ export default function Navbar({ isDark, onToggleTheme }: NavbarProps) {
             )}
           >
             Get Started
-          </motion.button>
+          </motion.a>
         </div>
 
         <div className="flex items-center gap-4 md:hidden">
@@ -109,12 +110,16 @@ export default function Navbar({ isDark, onToggleTheme }: NavbarProps) {
               {item}
             </a>
           ))}
-          <button className={cn(
-            "w-full py-4 font-bold rounded-xl transition-colors",
-            isDark ? "bg-emerald-500 text-black" : "bg-black text-white"
-          )}>
+          <a
+            href="#contact"
+            onClick={() => setIsOpen(false)}
+            className={cn(
+              "w-full py-4 font-bold rounded-xl transition-colors text-center block",
+              isDark ? "bg-emerald-500 text-black" : "bg-black text-white"
+            )}
+          >
             Get Started
-          </button>
+          </a>
         </motion.div>
       )}
     </nav>
