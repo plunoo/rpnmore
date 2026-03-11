@@ -125,6 +125,17 @@ async function startServer() {
     console.error("Postgres init skipped (Placeholder Mode active)");
   }
 
+  // Admin password verification — uses runtime env var ADMIN_PASSWORD (never baked into frontend)
+  app.post("/api/admin/verify", (req, res) => {
+    const { password } = req.body;
+    const adminPassword = process.env.ADMIN_PASSWORD || "rpnmore-admin";
+    if (password === adminPassword) {
+      res.json({ success: true });
+    } else {
+      res.status(401).json({ success: false, error: "Invalid password" });
+    }
+  });
+
   // API Routes
   app.get("/api/db-status", async (req, res) => {
     const status = {

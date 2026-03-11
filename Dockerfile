@@ -9,10 +9,6 @@ RUN npm ci
 # Copy source
 COPY . .
 
-# Build-time arg for admin password (baked into frontend bundle by Vite)
-ARG VITE_ADMIN_PASSWORD
-ENV VITE_ADMIN_PASSWORD=$VITE_ADMIN_PASSWORD
-
 # Build React frontend
 RUN npm run build
 

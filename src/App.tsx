@@ -19,7 +19,6 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Lock, Unlock, X, Eye, EyeOff } from 'lucide-react';
 import { cn } from './lib/utils';
 
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'rpnmore-admin';
 
 const INITIAL_POSTS: BlogPost[] = [
   {
@@ -146,16 +145,25 @@ export default function App() {
     }
   };
 
-  const handleAdminLogin = () => {
-    if (adminInput === ADMIN_PASSWORD) {
-      setIsAdmin(true);
-      localStorage.setItem('rpnmore_admin', 'true');
-      setShowAdminPrompt(false);
-      setAdminInput('');
-      setAdminError('');
-    } else {
-      setAdminError('Incorrect password. Try again.');
-      setAdminInput('');
+  const handleAdminLogin = async () => {
+    try {
+      const res = await fetch('/api/admin/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: adminInput }),
+      });
+      if (res.ok) {
+        setIsAdmin(true);
+        localStorage.setItem('rpnmore_admin', 'true');
+        setShowAdminPrompt(false);
+        setAdminInput('');
+        setAdminError('');
+      } else {
+        setAdminError('Incorrect password. Try again.');
+        setAdminInput('');
+      }
+    } catch {
+      setAdminError('Server error. Please try again.');
     }
   };
 
