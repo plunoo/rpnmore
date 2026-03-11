@@ -13,18 +13,18 @@ export default function BlogGenerator({ onPostGenerated }: BlogGeneratorProps) {
   const [topic, setTopic] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [step, setStep] = useState<'idle' | 'content' | 'image'>('idle');
+  const [error, setError] = useState<string | null>(null);
 
   const handleGenerate = async () => {
     if (!topic.trim()) return;
     setIsGenerating(true);
     setStep('content');
+    setError(null);
 
     try {
-      // 1. Generate Content
       const contentData = await generateBlogContent(topic);
-      
+
       setStep('image');
-      // 2. Generate Image
       const imageUrl = await generateBlogImage(contentData.title);
 
       const newPost: BlogPost = {
@@ -40,8 +40,16 @@ export default function BlogGenerator({ onPostGenerated }: BlogGeneratorProps) {
 
       onPostGenerated(newPost);
       setTopic('');
-    } catch (error) {
-      console.error('Generation failed:', error);
+    } catch (err: any) {
+      console.error('Generation failed:', err);
+      const msg = err?.message || '';
+      if (!process.env.GEMINI_API_KEY) {
+        setError('GEMINI_API_KEY is not set. Add it to your .env file to enable AI generation.');
+      } else if (msg.includes('API_KEY') || msg.includes('403')) {
+        setError('Invalid Gemini API key. Check your GEMINI_API_KEY value.');
+      } else {
+        setError(`Generation failed: ${msg || 'Unknown error. Check the console for details.'}`);
+      }
     } finally {
       setIsGenerating(false);
       setStep('idle');
@@ -96,6 +104,17 @@ export default function BlogGenerator({ onPostGenerated }: BlogGeneratorProps) {
             )}
           </button>
         </div>
+
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-600 dark:text-red-400 text-sm font-medium text-left flex items-start gap-3"
+          >
+            <span className="mt-0.5 shrink-0">⚠</span>
+            <span>{error}</span>
+          </motion.div>
+        )}
 
         {isGenerating && (
           <motion.div 
