@@ -2,67 +2,43 @@ import { Service } from './types';
 
 export const SERVICES: Service[] = [
   {
-    id: 'web-design',
-    title: 'Web & Graphic Design, Digital Art & NFT Creation',
-    description: 'Cutting-edge digital experiences and unique artistic assets for the modern web.',
-    icon: 'Layout',
-    category: 'Digital'
-  },
-  {
-    id: 'branding',
-    title: 'Branding',
-    description: 'Strategic brand identity development that resonates with your target audience.',
-    icon: 'Palette',
-    category: 'Identity'
-  },
-  {
-    id: 'signage',
-    title: '3D Signage & Signboards',
-    description: 'Physical presence that stands out with high-quality 3D signage solutions.',
-    icon: 'Box',
-    category: 'Physical'
-  },
-  {
-    id: 'souvenirs',
-    title: 'Branded Souvenirs',
-    description: 'Memorable gifts and promotional items that keep your brand in mind.',
-    icon: 'Gift',
-    category: 'Merchandise'
-  },
-  {
-    id: 'packaging',
-    title: 'Branded Packaging',
-    description: 'Custom paper bags, boxes, and poly bags that elevate the unboxing experience.',
-    icon: 'Package',
-    category: 'Merchandise'
-  },
-  {
-    id: 'media',
-    title: 'Event Photography & Videography',
-    description: 'Professional coverage that captures every moment of your important events.',
-    icon: 'Camera',
-    category: 'Media'
-  },
-  {
-    id: 'social-ai',
-    title: 'AI-Powered Social Media Management',
-    description: 'Content creation, automation, and AI agents to supercharge your social presence.',
+    id: 'techafrik',
+    title: 'TechAfrik',
+    description: 'AI & Blockchain Media for Africa. Delivering tech education, news, and insights across Telegram, WhatsApp, TikTok, Instagram, LinkedIn & X.',
     icon: 'Cpu',
-    category: 'AI & Social'
-  },
-  {
-    id: 'led-ads',
-    title: 'LED Screen Ads Rental & Publicity',
-    description: 'High-impact outdoor advertising on premium LED screens.',
-    icon: 'Monitor',
-    category: 'Advertising'
+    category: 'Media & Education',
+    externalLink: 'https://techafrik.rpnmore.com'
   },
   {
     id: 'dobuygoods',
-    title: 'Dobuygoods - General Goods & Electronics',
-    description: 'Home-used electronics, used cars, car parts, and general goods.',
+    title: 'Dobuygoods',
+    description: 'Buy & Sell. Pay with Crypto. A marketplace for used electronics and general goods — bridging African commerce with digital asset transactions.',
     icon: 'ShoppingCart',
     category: 'Commerce',
-    externalLink: 'https://web.facebook.com/Dobuygoods/'
+    externalLink: 'https://dobuygoods.rpnmore.com'
+  },
+  {
+    id: 'signupghana',
+    title: 'SignupGhana',
+    description: 'Branding & Visual Marketing in Ghana. Complete brand identity, 3D signage, LED screen advertising, and corporate merchandise.',
+    icon: 'Palette',
+    category: 'Branding',
+    externalLink: 'https://signupghana.rpnmore.com'
+  },
+  {
+    id: 'biskaken',
+    title: 'Biskaken Auto',
+    description: 'Trusted Automotive Repair & Services. Professional, reliable, and expert vehicle maintenance — because not everything is digital, yet.',
+    icon: 'Wrench',
+    category: 'Automotive',
+    externalLink: 'https://biskaken.rpnmore.com'
+  },
+  {
+    id: 'researchclaw',
+    title: 'ResearchClaw',
+    description: 'AI-Powered Research & Automation. Agentic AI systems, social media automation at scale, and intelligent workflows across all our ventures.',
+    icon: 'Bot',
+    category: 'AI & Automation',
+    externalLink: 'https://researchclaw.rpnmore.com'
   }
 ];

@@ -10,7 +10,7 @@ import Hero from './components/Hero';
 import Services from './components/Services';
 import Blog from './components/Blog';
 import BlogGenerator from './components/BlogGenerator';
-import FeaturedWork from './components/FeaturedWork';
+import About from './components/FeaturedWork';
 import ServicePage from './components/ServicePage';
 import AdminDashboard from './components/AdminDashboard';
 import { BlogPost, Service } from './types';
@@ -23,23 +23,33 @@ import { cn } from './lib/utils';
 const INITIAL_POSTS: BlogPost[] = [
   {
     id: '1',
-    title: 'The Power of AI in Modern Branding',
-    excerpt: 'Discover how artificial intelligence is revolutionizing the way we think about brand identity and customer engagement.',
+    title: 'What is Stellar (XLM) and Why It Matters for Africans',
+    excerpt: 'Stellar\'s fast, low-cost cross-border payment network is perfectly positioned for African financial markets. Here\'s why XLM could change how money moves across the continent.',
     content: 'Full content here...',
-    imageUrl: 'https://picsum.photos/seed/ai-branding/1280/720',
+    imageUrl: 'https://picsum.photos/seed/stellar-xlm/1280/720',
     date: 'March 10, 2026',
-    author: 'RPNMORE Team',
-    tags: ['AI', 'Branding', 'Tech']
+    author: 'TechAfrik Team',
+    tags: ['Crypto', 'Digital Assets']
   },
   {
     id: '2',
-    title: '3D Signage: Standing Out in a Digital World',
-    excerpt: 'Why physical presence still matters and how 3D signage can transform your storefront into a landmark.',
+    title: '5 AI Tools Every African Entrepreneur Should Use in 2026',
+    excerpt: 'From content automation to customer service — AI is leveling the playing field for African businesses. These are the tools making the biggest impact right now.',
     content: 'Full content here...',
-    imageUrl: 'https://picsum.photos/seed/signage/1280/720',
+    imageUrl: 'https://picsum.photos/seed/ai-tools-africa/1280/720',
     date: 'March 8, 2026',
-    author: 'Design Studio',
-    tags: ['Design', 'Physical', 'Retail']
+    author: 'ResearchClaw AI',
+    tags: ['AI', 'Africa Tech']
+  },
+  {
+    id: '3',
+    title: 'Start Small, Grow Smart: The Ripple & More Philosophy',
+    excerpt: 'You don\'t need thousands of dollars to start building digital wealth. Our philosophy is simple: start with what you have, learn as you grow, and let compounding do the rest.',
+    content: 'Full content here...',
+    imageUrl: 'https://picsum.photos/seed/ripple-more-philosophy/1280/720',
+    date: 'March 5, 2026',
+    author: 'Ripple & More',
+    tags: ['Digital Assets', 'Africa Tech']
   }
 ];
 
@@ -50,6 +60,21 @@ function ScrollToTop() {
   }, [pathname]);
   return null;
 }
+
+const WHY_ITEMS = [
+  { icon: '🤖', title: 'AI-First', desc: 'Every venture is powered by automation and intelligent systems built for scale.' },
+  { icon: '🌍', title: 'Africa-Focused', desc: 'We understand African markets, mobile money, and the unique opportunities across the continent.' },
+  { icon: '🔗', title: 'Crypto-Native', desc: 'From payments to education — digital assets are built into everything we do.' },
+  { icon: '🏗️', title: 'Multi-Venture', desc: 'One parent company. Multiple focused ventures. Each solving a specific problem for a specific market.' },
+  { icon: '🇬🇭', title: 'Ghanaian Roots, Dubai Operations', desc: 'Born in Ghana. Built in Dubai. Serving Africa and the GCC.' },
+];
+
+const STATS = [
+  { value: '5+', label: 'Active Ventures' },
+  { value: '2', label: 'Continents' },
+  { value: '10+', label: 'African Markets' },
+  { value: '1', label: 'Unified Mission' },
+];
 
 export default function App() {
   const [isDark, setIsDark] = useState(() => {
@@ -67,8 +92,8 @@ export default function App() {
   const [showPassword, setShowPassword] = useState(false);
   const adminInputRef = useRef<HTMLInputElement>(null);
 
-  const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [services, setServices] = useState<Service[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>(INITIAL_POSTS);
+  const [services, setServices] = useState<Service[]>(INITIAL_SERVICES);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -78,22 +103,18 @@ export default function App() {
           fetch('/api/services'),
           fetch('/api/posts')
         ]);
-        
+
         if (servicesRes.ok) {
-          const servicesData = await servicesRes.json();
-          if (servicesData.length > 0) setServices(servicesData);
-          else setServices(INITIAL_SERVICES);
+          const data = await servicesRes.json();
+          if (data.length > 0) setServices(data);
         }
-        
+
         if (postsRes.ok) {
-          const postsData = await postsRes.json();
-          if (postsData.length > 0) setPosts(postsData);
-          else setPosts(INITIAL_POSTS);
+          const data = await postsRes.json();
+          if (data.length > 0) setPosts(data);
         }
       } catch (err) {
         console.error('Failed to fetch data:', err);
-        setServices(INITIAL_SERVICES);
-        setPosts(INITIAL_POSTS);
       } finally {
         setIsLoading(false);
       }
@@ -133,11 +154,9 @@ export default function App() {
 
   const toggleAdmin = () => {
     if (isAdmin) {
-      // Log out of admin
       setIsAdmin(false);
       localStorage.setItem('rpnmore_admin', 'false');
     } else {
-      // Show password prompt
       setAdminInput('');
       setAdminError('');
       setShowAdminPrompt(true);
@@ -167,14 +186,13 @@ export default function App() {
     }
   };
 
-  const toggleTheme = () => setIsDark(!isDark);
-
-  if (isLoading) {
+  // Render immediately with defaults — no blocking spinner
+  if (isLoading && services.length === 0) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-[#0A0F1E] flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-zinc-500 font-bold tracking-widest text-xs animate-pulse">INITIALIZING RPNMORE...</p>
+          <div className="w-12 h-12 border-4 border-[#F5A623] border-t-transparent rounded-full animate-spin" />
+          <p className="text-zinc-500 font-bold tracking-widest text-xs animate-pulse">LOADING...</p>
         </div>
       </div>
     );
@@ -198,10 +216,10 @@ export default function App() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white dark:bg-zinc-950 border border-black/10 dark:border-white/10 rounded-3xl p-8 w-full max-w-md shadow-2xl"
+              className="bg-white dark:bg-[#0D1426] border border-black/10 dark:border-white/10 rounded-3xl p-8 w-full max-w-md shadow-2xl"
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-black tracking-tighter text-black dark:text-white">ADMIN <span className="text-emerald-500 italic">ACCESS</span></h3>
+                <h3 className="text-2xl font-black tracking-tighter text-black dark:text-white">ADMIN <span className="text-[#F5A623] italic">ACCESS</span></h3>
                 <button onClick={() => setShowAdminPrompt(false)} className="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                   <X size={20} className="text-zinc-500" />
                 </button>
@@ -211,7 +229,7 @@ export default function App() {
                   ref={adminInputRef}
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Enter admin password"
-                  className="w-full bg-zinc-100 dark:bg-zinc-900 border border-black/10 dark:border-white/10 rounded-xl p-4 pr-12 text-black dark:text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-full bg-zinc-100 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl p-4 pr-12 text-black dark:text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623]"
                   value={adminInput}
                   onChange={e => { setAdminInput(e.target.value); setAdminError(''); }}
                   onKeyDown={e => { if (e.key === 'Enter') handleAdminLogin(); }}
@@ -229,7 +247,7 @@ export default function App() {
               )}
               <button
                 onClick={handleAdminLogin}
-                className="w-full bg-emerald-500 text-black font-black py-4 rounded-xl hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/20"
+                className="w-full bg-[#F5A623] text-[#0A0F1E] font-black py-4 rounded-xl hover:bg-[#F5A623]/80 transition-all shadow-lg shadow-[#F5A623]/20"
               >
                 UNLOCK ADMIN
               </button>
@@ -237,83 +255,227 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
       <div className={cn(
-        "min-h-screen transition-colors duration-300 selection:bg-emerald-500 selection:text-black",
-        isDark ? "bg-black text-white dark" : "bg-white text-black"
+        "min-h-screen transition-colors duration-300 selection:bg-[#F5A623] selection:text-[#0A0F1E]",
+        isDark ? "bg-[#0A0F1E] text-white dark" : "bg-white text-black"
       )}>
-        <Navbar isDark={isDark} onToggleTheme={toggleTheme} />
-        
+        <Navbar isDark={isDark} onToggleTheme={() => setIsDark(!isDark)} />
+
         <Routes>
           <Route path="/" element={
             <main>
               <Hero />
-              
+              <About />
               <Services services={services} />
 
-              <FeaturedWork />
-              
+              {/* Why Ripple & More */}
+              <section className="py-32 px-6 bg-zinc-50 dark:bg-[#0D1426] transition-colors duration-300 relative">
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00C2FF]/30 to-transparent" />
+                <div className="max-w-7xl mx-auto">
+                  <div className="text-center mb-16">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      className="text-xs font-bold uppercase tracking-widest text-[#00C2FF] mb-4"
+                    >
+                      Why Us
+                    </motion.div>
+                    <motion.h2
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      className="text-4xl md:text-6xl font-black text-black dark:text-white tracking-tighter"
+                    >
+                      WHY CHOOSE <span className="text-[#F5A623] italic">RIPPLE & MORE?</span>
+                    </motion.h2>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {WHY_ITEMS.map((item, i) => (
+                      <motion.div
+                        key={item.title}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.1 }}
+                        className="p-8 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-white/[0.03] hover:border-[#F5A623]/30 transition-all group"
+                      >
+                        <span className="text-4xl mb-4 block">{item.icon}</span>
+                        <h3 className="text-xl font-black text-black dark:text-white mb-3 group-hover:text-[#F5A623] transition-colors">{item.title}</h3>
+                        <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{item.desc}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              {/* Stats Bar */}
+              <section className="py-16 px-6 bg-[#F5A623] relative overflow-hidden">
+                <div className="absolute inset-0 opacity-10"
+                  style={{ backgroundImage: 'radial-gradient(circle, #0A0F1E 1px, transparent 1px)', backgroundSize: '30px 30px' }}
+                />
+                <div className="max-w-7xl mx-auto relative">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                    {STATS.map((stat, i) => (
+                      <motion.div
+                        key={stat.label}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.1 }}
+                        className="text-center"
+                      >
+                        <p className="text-5xl md:text-6xl font-black text-[#0A0F1E]">{stat.value}</p>
+                        <p className="text-sm font-bold text-[#0A0F1E]/70 uppercase tracking-widest mt-2">{stat.label}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
               {isAdmin && <BlogGenerator onPostGenerated={handlePostGenerated} />}
-              
+
               <Blog posts={posts} />
 
               {isAdmin && (
-                <AdminDashboard 
-                  services={services} 
-                  onUpdateServices={updateServices} 
+                <AdminDashboard
+                  services={services}
+                  onUpdateServices={updateServices}
                 />
               )}
 
-              {/* Contact Section */}
-              <section id="contact" className="py-32 px-6 bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300">
-                <div className="max-w-7xl mx-auto text-center">
+              {/* Final CTA */}
+              <section id="contact" className="py-32 px-6 bg-[#0A0F1E] dark:bg-[#0A0F1E] relative overflow-hidden">
+                <div className="absolute inset-0 pointer-events-none">
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#F5A623]/10 rounded-full blur-[160px]" />
+                </div>
+                <div className="max-w-7xl mx-auto text-center relative">
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    className="text-xs font-bold uppercase tracking-widest text-[#F5A623] mb-6"
+                  >
+                    Ready to Start?
+                  </motion.div>
                   <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-5xl md:text-8xl font-black text-black dark:text-white tracking-tighter mb-12"
+                    className="text-5xl md:text-8xl font-black text-white tracking-tighter mb-8 leading-none"
                   >
-                    READY TO <span className="text-emerald-500 italic">EVOLVE?</span>
+                    READY TO BUILD <br />
+                    <span className="text-[#F5A623] italic">DIGITAL WEALTH?</span>
                   </motion.h2>
-                  <p className="text-zinc-600 dark:text-zinc-400 text-xl mb-12 max-w-2xl mx-auto">
-                    Let's discuss your next project. Whether it's a new brand identity, 
-                    AI automation, or high-impact signage, we're here to help.
+                  <p className="text-zinc-400 text-xl mb-12 max-w-2xl mx-auto">
+                    Whether you're an individual, a business, or a partner — there's a place for you in the Ripple & More ecosystem.
                   </p>
-                  <a
-                    href="mailto:info@rpnmore.com"
-                    className="inline-block px-12 py-6 bg-black dark:bg-white text-white dark:text-black font-black text-xl rounded-3xl hover:bg-emerald-500 dark:hover:bg-emerald-400 hover:scale-105 transition-all shadow-xl shadow-emerald-500/20"
-                  >
-                    CONTACT US NOW
-                  </a>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a
+                      href="#ventures"
+                      className="px-10 py-5 bg-[#F5A623] text-[#0A0F1E] font-black text-lg rounded-2xl hover:bg-[#F5A623]/80 hover:scale-105 transition-all shadow-xl shadow-[#F5A623]/20"
+                    >
+                      Explore Our Ventures
+                    </a>
+                    <a
+                      href="#blog"
+                      className="px-10 py-5 border border-white/20 text-white font-black text-lg rounded-2xl hover:border-[#00C2FF]/50 hover:bg-[#00C2FF]/10 transition-all"
+                    >
+                      Read the Blog
+                    </a>
+                    <a
+                      href="mailto:info@rpnmore.com"
+                      className="px-10 py-5 border border-white/20 text-white font-black text-lg rounded-2xl hover:border-[#F5A623]/50 hover:bg-[#F5A623]/10 transition-all"
+                    >
+                      Contact Us
+                    </a>
+                  </div>
                 </div>
               </section>
             </main>
           } />
-          
+
           <Route path="/service/:id" element={<ServicePage services={services} />} />
         </Routes>
 
-        <footer className="py-12 px-6 border-t border-black/5 dark:border-white/10 bg-white dark:bg-black transition-colors duration-300">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-emerald-500 rounded flex items-center justify-center">
-                <span className="text-black font-black">R</span>
+        {/* Footer */}
+        <footer className="py-16 px-6 border-t border-white/5 bg-[#060A14]">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row items-start justify-between gap-12 mb-12">
+              {/* Brand */}
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 bg-[#F5A623] rounded flex items-center justify-center">
+                    <span className="text-[#0A0F1E] font-black">R</span>
+                  </div>
+                  <span className="text-white font-black text-xl tracking-tighter">Ripple & More</span>
+                </div>
+                <p className="text-zinc-500 text-sm mb-2">Founded in Ghana · Operating from Dubai, UAE</p>
+                <p className="text-[#F5A623] text-xs font-bold uppercase tracking-widest italic">
+                  "Start Small, Grow Smart — Digital Assets for Every African"
+                </p>
               </div>
-              <span className="text-xl font-bold tracking-tighter text-black dark:text-white">RPNMORE</span>
+
+              {/* Venture Links */}
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#F5A623] mb-4">Our Ventures</p>
+                <div className="flex flex-col gap-2">
+                  {[
+                    { name: 'TechAfrik', href: 'https://techafrik.rpnmore.com' },
+                    { name: 'Dobuygoods', href: 'https://dobuygoods.rpnmore.com' },
+                    { name: 'SignupGhana', href: 'https://signupghana.rpnmore.com' },
+                    { name: 'Biskaken', href: 'https://biskaken.rpnmore.com' },
+                    { name: 'ResearchClaw', href: 'https://researchclaw.rpnmore.com' },
+                  ].map(v => (
+                    <a key={v.name} href={v.href} target="_blank" rel="noopener noreferrer"
+                      className="text-zinc-400 hover:text-[#F5A623] transition-colors text-sm font-medium">
+                      {v.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Links */}
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#F5A623] mb-4">Quick Links</p>
+                <div className="flex flex-col gap-2">
+                  {['Home', 'About', 'Ventures', 'Blog', 'Contact'].map(link => (
+                    <a key={link} href={`#${link.toLowerCase()}`}
+                      className="text-zinc-400 hover:text-white transition-colors text-sm font-medium">
+                      {link}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Social */}
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-[#F5A623] mb-4">Follow Us</p>
+                <div className="flex flex-col gap-2">
+                  {[
+                    { name: 'Twitter / X', href: 'https://twitter.com/rpnmore' },
+                    { name: 'Instagram', href: 'https://instagram.com/rpnmore' },
+                    { name: 'LinkedIn', href: 'https://linkedin.com/company/rpnmore' },
+                  ].map(s => (
+                    <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer"
+                      className="text-zinc-400 hover:text-[#F5A623] transition-colors text-sm font-medium">
+                      {s.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
-            <div className="text-zinc-500 text-sm">
-              © 2026 RPNMORE Creative & AI Solutions. All rights reserved.
-            </div>
-            <div className="flex items-center gap-6 text-zinc-500 dark:text-zinc-400 text-sm font-medium">
-              <button 
+
+            <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+              <p className="text-zinc-600 text-sm">© 2026 Ripple & More Limited. All Rights Reserved.</p>
+              <button
                 onClick={toggleAdmin}
-                className="flex items-center gap-2 hover:text-emerald-600 dark:hover:text-emerald-500 transition-colors"
+                className="flex items-center gap-2 text-zinc-600 hover:text-[#F5A623] transition-colors text-xs"
               >
-                {isAdmin ? <Unlock size={14} /> : <Lock size={14} />}
+                {isAdmin ? <Unlock size={12} /> : <Lock size={12} />}
                 {isAdmin ? 'Admin Mode On' : 'Admin Login'}
               </button>
-              <a href="https://twitter.com/rpnmore" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors">Twitter</a>
-              <a href="https://instagram.com/rpnmore" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors">Instagram</a>
-              <a href="https://linkedin.com/company/rpnmore" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors">LinkedIn</a>
             </div>
           </div>
         </footer>

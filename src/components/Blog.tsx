@@ -6,9 +6,19 @@ interface BlogProps {
   posts: BlogPost[];
 }
 
+const CATEGORY_COLORS: Record<string, string> = {
+  'AI': 'bg-[#00C2FF]/20 text-[#00C2FF]',
+  'Crypto': 'bg-[#F5A623]/20 text-[#F5A623]',
+  'Branding': 'bg-purple-500/20 text-purple-400',
+  'Digital Assets': 'bg-[#F5A623]/20 text-[#F5A623]',
+  'Africa Tech': 'bg-emerald-500/20 text-emerald-400',
+};
+
 export default function Blog({ posts }: BlogProps) {
   return (
-    <section id="blog" className="py-32 px-6 bg-white dark:bg-black transition-colors duration-300">
+    <section id="blog" className="py-32 px-6 bg-white dark:bg-[#0A0F1E] transition-colors duration-300 relative">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00C2FF]/30 to-transparent" />
+
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-end justify-between mb-20 gap-8">
           <div className="max-w-2xl">
@@ -16,9 +26,9 @@ export default function Blog({ posts }: BlogProps) {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-4"
+              className="text-xs font-bold uppercase tracking-widest text-[#00C2FF] mb-4"
             >
-              Latest Insights
+              Education Hub
             </motion.div>
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -27,8 +37,8 @@ export default function Blog({ posts }: BlogProps) {
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-6xl font-black text-black dark:text-white tracking-tighter leading-none"
             >
-              AI-POWERED <br />
-              <span className="text-zinc-400 dark:text-zinc-500 italic">THOUGHTS.</span>
+              LEARN. GROW. <br />
+              <span className="text-[#F5A623] italic">BUILD WEALTH.</span>
             </motion.h2>
           </div>
           <motion.p
@@ -38,10 +48,30 @@ export default function Blog({ posts }: BlogProps) {
             transition={{ delay: 0.2 }}
             className="max-w-md text-zinc-600 dark:text-zinc-400 text-lg"
           >
-            Stay updated with the latest trends in branding, digital art, and AI. 
-            Our blog is powered by human-AI collaboration.
+            Free education and insights on digital assets, AI, crypto, and financial freedom — written for everyday Africans.
           </motion.p>
         </div>
+
+        {/* Category filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap gap-3 mb-12"
+        >
+          {['All Posts', 'Digital Assets', 'AI & Automation', 'Mobile Money', 'Africa Tech', 'Portfolio Building'].map(cat => (
+            <button
+              key={cat}
+              className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-colors border ${
+                cat === 'All Posts'
+                  ? 'bg-[#F5A623] text-[#0A0F1E] border-[#F5A623]'
+                  : 'border-black/10 dark:border-white/10 text-zinc-600 dark:text-zinc-400 hover:border-[#F5A623]/50 hover:text-[#F5A623]'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, i) => (
@@ -51,18 +81,24 @@ export default function Blog({ posts }: BlogProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group bg-zinc-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 rounded-3xl overflow-hidden hover:border-emerald-500/50 transition-all"
+              className="group bg-zinc-50 dark:bg-white/[0.03] border border-black/10 dark:border-white/5 rounded-3xl overflow-hidden hover:border-[#F5A623]/40 transition-all"
             >
               <div className="aspect-video relative overflow-hidden">
-                <img 
-                  src={post.imageUrl} 
-                  alt={post.title} 
+                <img
+                  src={post.imageUrl}
+                  alt={post.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   referrerPolicy="no-referrer"
+                  loading="lazy"
+                  width="640"
+                  height="360"
                 />
-                <div className="absolute top-4 left-4 flex gap-2">
-                  {post.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1 bg-black/60 backdrop-blur-md text-[10px] font-bold uppercase tracking-widest text-white rounded-full">
+                <div className="absolute top-4 left-4 flex gap-2 flex-wrap">
+                  {post.tags.slice(0, 2).map(tag => (
+                    <span
+                      key={tag}
+                      className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-md ${CATEGORY_COLORS[tag] || 'bg-black/60 text-white'}`}
+                    >
                       {tag}
                     </span>
                   ))}
@@ -79,20 +115,47 @@ export default function Blog({ posts }: BlogProps) {
                     {post.author}
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold text-black dark:text-white mb-4 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors">
+                <h3 className="text-xl font-bold text-black dark:text-white mb-3 group-hover:text-[#F5A623] transition-colors leading-tight line-clamp-2">
                   {post.title}
                 </h3>
                 <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-8 line-clamp-3">
                   {post.excerpt}
                 </p>
                 <button className="flex items-center gap-2 text-sm font-bold text-black dark:text-white group-hover:gap-4 transition-all">
-                  READ MORE <ArrowRight size={16} className="text-emerald-500" />
+                  READ MORE <ArrowRight size={16} className="text-[#F5A623]" />
                 </button>
               </div>
             </motion.article>
           ))}
         </div>
+
+        {/* Newsletter block */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 rounded-3xl border border-[#F5A623]/20 bg-[#F5A623]/5 p-10 md:p-16 text-center"
+        >
+          <h3 className="text-3xl md:text-5xl font-black text-black dark:text-white tracking-tighter mb-3">
+            Get Weekly Insights — <span className="text-[#F5A623]">Free</span>
+          </h3>
+          <p className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-md mx-auto">
+            Join thousands of Africans learning to build digital wealth. No spam. Just value.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input
+              type="email"
+              placeholder="Enter your email address"
+              className="flex-1 px-5 py-4 rounded-xl bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 text-black dark:text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623]"
+            />
+            <button className="px-6 py-4 bg-[#F5A623] text-[#0A0F1E] font-black rounded-xl hover:bg-[#F5A623]/80 transition-colors whitespace-nowrap">
+              Subscribe Free →
+            </button>
+          </div>
+        </motion.div>
       </div>
+
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#00C2FF]/30 to-transparent" />
     </section>
   );
 }
