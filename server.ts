@@ -51,25 +51,51 @@ try {
   console.warn("Firebase Admin init failed — falling back to in-memory store:", (e as Error).message);
 }
 
-// Placeholder Data
-const PLACEHOLDER_SERVICES = [
+// Canonical ventures — single source of truth shared by server + client fallback
+const VENTURES = [
   {
-    id: '1',
-    title: 'AI Branding Strategy',
-    description: 'Data-driven brand identities crafted by neural networks.',
-    category: 'Strategy',
-    icon: 'Layout',
-    imageUrl: 'https://picsum.photos/seed/brand/800/600'
+    id: 'techafrik',
+    title: 'TechAfrik',
+    description: 'AI & Blockchain Media for Africa. Delivering tech education, news, and insights across Telegram, WhatsApp, TikTok, Instagram, LinkedIn & X.',
+    category: 'Media & Education',
+    icon: 'Cpu',
+    externalLink: 'https://techafrik.rpnmore.com'
   },
   {
-    id: '2',
-    title: 'Neural Art Generation',
-    description: 'Custom digital masterpieces generated from your vision.',
-    category: 'Creative',
+    id: 'dobuygoods',
+    title: 'Dobuygoods',
+    description: 'Buy & Sell. Pay with Crypto. A marketplace for used electronics and general goods — bridging African commerce with digital asset transactions.',
+    category: 'Commerce',
+    icon: 'ShoppingCart',
+    externalLink: 'https://dobuygoods.rpnmore.com'
+  },
+  {
+    id: 'signupghana',
+    title: 'SignupGhana',
+    description: 'Branding & Visual Marketing in Ghana. Complete brand identity, 3D signage, LED screen advertising, and corporate merchandise.',
+    category: 'Branding',
     icon: 'Palette',
-    imageUrl: 'https://picsum.photos/seed/art/800/600'
+    externalLink: 'https://signupghana.rpnmore.com'
+  },
+  {
+    id: 'biskaken',
+    title: 'Biskaken Auto',
+    description: 'Trusted Automotive Repair & Services. Professional, reliable, and expert vehicle maintenance — because not everything is digital, yet.',
+    category: 'Automotive',
+    icon: 'Wrench',
+    externalLink: 'https://biskaken.rpnmore.com'
+  },
+  {
+    id: 'researchclaw',
+    title: 'ResearchClaw',
+    description: 'AI-Powered Research & Automation. Agentic AI systems, social media automation at scale, and intelligent workflows across all our ventures.',
+    category: 'AI & Automation',
+    icon: 'Bot',
+    externalLink: 'https://researchclaw.rpnmore.com'
   }
 ];
+
+const PLACEHOLDER_SERVICES = VENTURES;
 
 const PLACEHOLDER_POSTS = [
   {
@@ -99,6 +125,26 @@ async function startServer() {
   const PORT = parseInt(process.env.PORT || "3000");
 
   app.use(express.json());
+
+  // Migrate Firebase services to the canonical ventures list on startup
+  try {
+    if (db) {
+      const snapshot = await db.collection("services").get();
+      const ids = snapshot.docs.map(d => d.id);
+      const ventureIds = VENTURES.map(v => v.id);
+      const isStale = ids.some(id => !ventureIds.includes(id)) || ids.length !== ventureIds.length;
+      if (isStale) {
+        // Delete old docs and write new ventures
+        const batch = db.batch();
+        snapshot.docs.forEach(d => batch.delete(d.ref));
+        VENTURES.forEach(v => batch.set(db!.collection("services").doc(v.id), v));
+        await batch.commit();
+        console.log("Firebase services migrated to new ventures");
+      }
+    }
+  } catch (e) {
+    console.warn("Firebase ventures migration skipped:", (e as Error).message);
+  }
 
   // Initialize Postgres Tables
   try {
