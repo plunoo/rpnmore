@@ -13,33 +13,43 @@ const { Pool } = pg;
 
 // Load Firebase Config
 const firebaseConfigPath = path.join(process.cwd(), "firebase-applet-config.json");
-const firebaseConfig = JSON.parse(fs.readFileSync(firebaseConfigPath, "utf-8"));
+let firebaseConfig: any = {};
+try {
+  firebaseConfig = JSON.parse(fs.readFileSync(firebaseConfigPath, "utf-8"));
+} catch (e) {
+  console.warn("firebase-applet-config.json not found or invalid — Firebase disabled");
+}
 
 // Initialize Firebase Admin
 // Supports FIREBASE_SERVICE_ACCOUNT_KEY env var (JSON string) for Dokploy/VPS deployments,
 // falls back to applicationDefault() for Google Cloud/AI Studio environments.
-if (!admin.apps.length) {
-  let credential;
-  if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
-    try {
-      const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
-      credential = admin.credential.cert(serviceAccount);
-      console.log("Firebase Admin: using service account from env");
-    } catch (e) {
-      console.error("FIREBASE_SERVICE_ACCOUNT_KEY is invalid JSON, falling back to applicationDefault()");
+let db: admin.firestore.Firestore | null = null;
+try {
+  if (!admin.apps.length) {
+    let credential;
+    if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
+      try {
+        const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+        credential = admin.credential.cert(serviceAccount);
+        console.log("Firebase Admin: using service account from env");
+      } catch (e) {
+        console.error("FIREBASE_SERVICE_ACCOUNT_KEY is invalid JSON, falling back to applicationDefault()");
+        credential = admin.credential.applicationDefault();
+      }
+    } else {
       credential = admin.credential.applicationDefault();
     }
-  } else {
-    credential = admin.credential.applicationDefault();
+    admin.initializeApp({
+      credential,
+      projectId: firebaseConfig.projectId,
+      databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
+    });
   }
-  admin.initializeApp({
-    credential,
-    projectId: firebaseConfig.projectId,
-    databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
-  });
+  db = admin.firestore();
+  console.log("Firebase Admin: initialized");
+} catch (e) {
+  console.warn("Firebase Admin init failed — falling back to in-memory store:", (e as Error).message);
 }
-
-const db = admin.firestore();
 
 // Placeholder Data
 const PLACEHOLDER_SERVICES = [
@@ -137,14 +147,14 @@ async function startServer() {
   });
 
   // API Routes
-  app.get("/api/db-status", async (req, res) => {
+  app.get("/api/db-status", async (_req, res) => {
     const status = {
       firebase: "placeholder",
       postgres: "placeholder",
     };
 
     try {
-      if (firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("TODO")) {
+      if (db && firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("TODO")) {
         await db.collection("health").doc("check").set({ lastCheck: new Date() });
         status.firebase = "connected";
       }
@@ -167,9 +177,9 @@ async function startServer() {
   });
 
   // Services API
-  app.get("/api/services", async (req, res) => {
+  app.get("/api/services", async (_req, res) => {
     try {
-      if (firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("TODO")) {
+      if (db && firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("TODO")) {
         const snapshot = await db.collection("services").get();
         if (!snapshot.empty) {
           return res.json(snapshot.docs.map(doc => doc.data()));
@@ -187,12 +197,14 @@ async function startServer() {
     
     try {
       // Try Firebase
-      const batch = db.batch();
-      services.forEach((s: any) => {
-        const ref = db.collection("services").doc(s.id);
-        batch.set(ref, s);
-      });
-      await batch.commit();
+      if (db) {
+        const batch = db.batch();
+        services.forEach((s: any) => {
+          const ref = db!.collection("services").doc(s.id);
+          batch.set(ref, s);
+        });
+        await batch.commit();
+      }
 
       // Try Postgres
       if (process.env.DATABASE_URL) {
@@ -221,9 +233,9 @@ async function startServer() {
   });
 
   // Posts API
-  app.get("/api/posts", async (req, res) => {
+  app.get("/api/posts", async (_req, res) => {
     try {
-      if (firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("TODO")) {
+      if (db && firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("TODO")) {
         const snapshot = await db.collection("posts").orderBy("date", "desc").get();
         if (!snapshot.empty) {
           return res.json(snapshot.docs.map(doc => doc.data()));
@@ -240,7 +252,7 @@ async function startServer() {
     memoryPosts = [post, ...memoryPosts]; // Update memory store
     
     try {
-      await db.collection("posts").doc(post.id).set(post);
+      if (db) await db.collection("posts").doc(post.id).set(post);
 
       if (process.env.DATABASE_URL) {
         await pool.query(`
